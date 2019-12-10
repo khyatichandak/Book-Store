@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
+from PIL import Image
 
 
 class Publisher(models.Model):
@@ -32,7 +33,7 @@ class Book(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MaxValueValidator(1000), MinValueValidator(0)])
     publisher = models.ForeignKey(Publisher, related_name='books', on_delete=models.CASCADE)
     description=models.TextField(max_length=500, blank=True)
-    num_reviews=models.PositiveIntegerField(default=0)
+    num_reviews=models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5), MinValueValidator(1)])
 
     def __str__(self):
         return self.title
@@ -52,6 +53,7 @@ class Member(User):
     last_renewal = models.DateField(default=timezone.now)
     auto_renew = models.BooleanField(default=True)
     borrowed_books = models.ManyToManyField(Book, blank=True)
+    # image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
         return self.username

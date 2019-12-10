@@ -1,6 +1,7 @@
 from django import forms
 from myapp.models import Order, Review, Member, Profile
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
+from django.contrib.auth.models import User
 
 
 class SearchForm(forms.Form):
@@ -35,9 +36,12 @@ class ReviewForm(forms.ModelForm):
 
 class RegisterForm(UserCreationForm):
     email=forms.EmailField()
+    first_name = forms.CharField(max_length=100, required=False, label='First Name')
+    last_name = forms.CharField(max_length=100, required=False, label='Last Name')
+
     class Meta:
         model=Member
-        fields=['username','email','password1','password2']
+        fields=['username','first_name','last_name','email','password1','password2']
 
 
 class LoginForm(AuthenticationForm):
@@ -48,6 +52,7 @@ class LoginForm(AuthenticationForm):
 
 class UserUpdateForm(forms.ModelForm):
     email=forms.EmailField()
+
     class Meta:
         model=Member
         fields=['username','email']
@@ -57,3 +62,19 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model=Profile
         fields=['image']
+
+
+class PasswordRequestForm(forms.ModelForm):
+    email=forms.EmailField()
+    last_name=forms.CharField()
+    first_name=forms.CharField()
+
+    class Meta:
+        model=User
+        fields=['first_name','last_name','email']
+
+
+class PasswordChangeForm(SetPasswordForm):
+     class Meta:
+        model=Member
+        fields=['password1','password2']

@@ -9,19 +9,25 @@
 <body>
 
     {% block body_block %}
-        {{ error | default:'' }}
-         <form action="{% url 'myapp:review' %}" method="post">
-             {% csrf_token %}
-             <fieldset class="form-group">
-                 <legend class="border-bottom mb-4">Review Book</legend>
-                 {{ form|crispy }}
-             </fieldset>
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+        {% if form %}
+             <form action="{% url 'myapp:review' %}" method="post">
+                 {% csrf_token %}
+                 <fieldset class="form-group">
+                     <legend class="border-bottom mb-4">Review Book</legend>
+                     {{ form|crispy }}
+                 </fieldset>
 
-             <div class="form-group">
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <input type="submit" name="Submit" value="Submit Review" class="btn btn-outline-info">
-             </div>
-         </form>
+                 <div class="form-group">
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <input type="submit" name="Submit" value="Submit Review" class="btn btn-outline-info">
+                 </div>
+             </form>
+        {% endif %}
 
     {% endblock %}
 </body>

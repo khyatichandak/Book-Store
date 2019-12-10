@@ -3,6 +3,13 @@ body{
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     margin: 0px;
 }
+.hbar1{
+    display: inline;
+    margin: 15px;
+}
+hr{
+    border-style: none;
+}
 
 .main-body{
     padding: 70px 0px !important;
@@ -10,19 +17,6 @@ body{
 
 h1{
    text-align: center;
-}
-
-hr{
-    border-style: none;
-}
-
-.footer{
-    background-color: silver;
-}
-
-.hbar1{
-    display: inline;
-    margin: 15px;
 }
 
 table{
@@ -36,7 +30,7 @@ th, td{
 .navbar{
     position: fixed !important;
     width: 100%;
-    z-index: 9999999;
+    z-index: 99999;
 }
 
 .bg-navbar{
@@ -46,4 +40,12 @@ th, td{
 .bg-light{
     border: solid 1px grey;
     padding: 20px;
+}
+
+.account-img{
+    height: 150px;
+    width: 150px;
+}
+.media-body{
+    padding-left: 20px;
 }

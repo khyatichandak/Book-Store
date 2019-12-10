@@ -29,7 +29,7 @@ class PublisherAdmin(admin.ModelAdmin):
 
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('first_name','last_name','status','get_borrowed_books')
+    list_display = ('username','first_name','last_name','status','get_borrowed_books')
 
 
 # Register your models here.

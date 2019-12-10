@@ -5,11 +5,12 @@
 <head>
     <meta charset="UTF-8">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}">
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
     <script type="text/javascript" rel="{% static '/js/bootstrap.js' %}"></script>
-    <title>{% block title %}eBook APP - Welcome!{% endblock %}</title>
+    <title>{% block title %}Books Management{% endblock %}</title>
 </head>
 <body>
 
@@ -24,14 +25,14 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'myapp:index' %}">Home<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'myapp:findbooks' %}">Find Books<span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'myapp:findbooks' %}">Find Books<span class="sr-only"></span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'myapp:place_order' %}">Place Order<span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'myapp:place_order' %}">Place Order<span class="sr-only"></span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'myapp:review' %}">Review Book<span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'myapp:review' %}">Review Book<span class="sr-only"></span></a>
       </li>
 {#      <li class="nav-item active">#}
 {#        <a class="nav-link" href="{% url 'myapp:check_reviews' %}">Check Reviews<span class="sr-only">(current)</span></a>#}
@@ -65,7 +66,7 @@
 {#            <a class="btn btn-outline-light" href="{%  url 'myapp:profile' %}">Profile</a>&nbsp; &nbsp;#}
             <a class="btn btn-outline-light" href="{%  url 'myapp:user_logout' %}">Logout</a>
         {% else %}
-            User&nbsp; &nbsp;
+            Hello User &nbsp; &nbsp;
             <a class="btn btn-outline-light my-2 my-sm-0" href="{% url 'myapp:user_login' %}">LogIn</a>&nbsp; &nbsp;
             <a class="btn btn-outline-light" href="{% url 'myapp:user_register' %}">Register</a>
         {% endif %}

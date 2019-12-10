@@ -26,16 +26,20 @@ urlpatterns=[
     path(r'media/',serve,{'document_root':settings.MEDIA_ROOT}),
     path('', include('django.contrib.auth.urls')),
 
-    path(r'password-reset/', auth_views.PasswordResetView.as_view(template_name='myapp/password_reset.html'),
-         name='password_reset'),
-    path(r'password-reset/done/',
-         auth_views.PasswordResetDoneView.as_view(template_name='myapp/password_reset_done.html'),
-            name='password_reset_done'),
-    path(r'password-reset-confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_reset_confirm.html'),
-         name='password_reset_confirm'),
-    path(r'password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
-         name='password_reset_complete'),
+    path('forgot_password/',views.forgot_password,name='forgot_password'),
+
+    path('change_password/',views.change_password,name='change_password'),
+
+    # path(r'password-reset/', auth_views.PasswordResetView.as_view(template_name='myapp/password_reset.html'),
+    #      name='password_reset'),
+    # path(r'password-reset/done/',
+    #      auth_views.PasswordResetDoneView.as_view(template_name='myapp/password_reset_done.html'),
+    #         name='password_reset_done'),
+    # path(r'password-reset-confirm/<uidb64>/<token>/',
+    #      auth_views.PasswordResetConfirmView.as_view(template_name='myapp/password_reset_confirm.html'),
+    #      name='password_reset_confirm'),
+    # path(r'password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'),
+    #      name='password_reset_complete'),
 ]
 
 

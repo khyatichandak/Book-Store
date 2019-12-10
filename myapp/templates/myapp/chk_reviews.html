@@ -16,8 +16,8 @@
         {% endif %}
         <form method="POST">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <p>{{ request.path }}</p>
+{#        <input type="hidden" name="next" value="{{ request.path }}">#}
+{#        <p>{{ request.path }}</p>#}
         </form>
     {% endblock %}
 </body>
