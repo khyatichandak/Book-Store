@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>eBook App</title>
+</head>
+<body>
+{% if book %}
+    <table border="1" style="border-collapse: collapse">
+    <tr>
+        <th>Title</th>
+        <th>Price($)</th>
+        <th>Publisher</th>
+    </tr>
+{#    {%  for b in book %}#}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.price }}</td>
+            <td>{{ book.publisher.name }}</td>
+        </tr>
+{#    {% endfor %}#}
+    </table>
+{% endif %}
+
+<p><a href="{% url 'myapp:index' %}">Main page</a></p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    {% block body_block %}
+        {{ error | default:'' }}
+         <form action="{% url 'myapp:review' %}" method="post">
+             {% csrf_token %}
+             <fieldset class="form-group">
+                 <legend class="border-bottom mb-4">Review Book</legend>
+                 {{ form|crispy }}
+             </fieldset>
+
+             <div class="form-group">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="submit" name="Submit" value="Submit Review" class="btn btn-outline-info">
+             </div>
+         </form>
+
+    {% endblock %}
+</body>
+</html>

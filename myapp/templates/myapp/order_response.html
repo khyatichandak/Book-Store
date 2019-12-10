@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% block body_block %}
+        Hello, order response
+        <ul>
+        {% if books %}
+            {% for book in books %}
+                <li>{{ book.title }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No books available with given criteria</li>
+        {% endif %}
+        </ul>
+    {% endblock %}
+</body>
+</html>

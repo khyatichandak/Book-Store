@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block body_block %}
+    {% if book %}
+    <fieldset class="form-group">
+         <legend class="border-bottom mb-4">Detail of Book <span class="font-weight-bold">{{ book.title }}</span></legend>
+    </fieldset>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Price($)</th>
+            <th>Publisher</th>
+        </tr>
+{#    {%  for b in book %}#}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.price }}</td>
+            <td>{{ book.publisher.name }}</td>
+        </tr>
+{#    {% endfor %}#}
+    </table>
+    {% endif %}
+    <br>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <p><a href="{% url 'myapp:index' %}">List of books</a></p>
+        </small>
+    </div>
+{% endblock %}
+</body>
+</html>

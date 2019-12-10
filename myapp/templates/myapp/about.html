@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}eBook APP About page{% endblock %}</title>
+</head>
+<body>
+{% block body_block %}
+    <h2>This is an eBook APP.</h2>
+    <p>Your lucky number is {{ mynum }}</p>
+    <a href="/myapp/">Main page</a>(hardcoded url)<br>
+    <a href="{%  url 'myapp:index' %}">Main page</a>(url namespacing)
+{% endblock %}
+</body>
+</html>
