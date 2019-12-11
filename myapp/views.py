@@ -129,12 +129,16 @@ def review(request):
 
 
 def user_login(request):
-    if request.method=='POST':
-        form = LoginForm(request.POST)
+    if 'username' not in request.session:
 
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('passsword')
+        if request.method=='POST':
+            form = LoginForm(request.POST)
+
+            # if form.is_valid():
+                # username = form.cleaned_data.get('username')
+            username = request.POST['username']
+            # password = form.cleaned_data.get('passsword')
+            password = request.POST['password']
             user = authenticate(username=username, password=password)
 
             if user and user.is_active:
@@ -143,37 +147,23 @@ def user_login(request):
                 now = datetime.datetime.now()
                 request.session['last_login']=now.strftime("%d-%m-%Y %H:%M:%S")
                 request.session.set_expiry(60)
-                messages.success(request, f'AYou are successfully Logged In!')
+                messages.success(request, 'You are successfully Logged In!')
 
                 if 'next' in request.POST:
                     return render(request.POST.get('next'))
                 else:
                     return render(request, 'myapp/index.html')
+            # else:
+            #     # messages.error(request,f'Invalid data. Try again!')
+            #     return render(request, 'myapp/login.html', {'form':form})
         else:
-            # messages.error(request,f'Invalid data. Try again!')
-            return render(request, 'myapp/login.html', {'form':form})
+            form = LoginForm()
+            return render(request,'myapp/login.html',{'form':form})
+
     else:
-        form = LoginForm()
-        return render(request,'myapp/login.html',{'form':form})
-
-    # username=request.POST['username']
-    # request.session['username']=username
-    # password=request.POST['password']
-    # user=authenticate(username=username,password=password)
-    # if user:
-    #     if user.is_active:
-    #         # next=request.POST.get('next','/')
-    #         login(request,user)
-    #         now=datetime.datetime.now()
-    #         request.session['last_login']=now.strftime("%d-%m-%Y %H:%M:%S")
-    #         request.session.set_expiry(60)
-    #         # return HttpResponseRedirect(reverse('myapp:index'))
-    #         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    #     else:
-    #         return HttpResponse('Your account is disabled.')
-    # else:
-    #     return HttpResponse('Invalid login details.')
-
+        booklist = Book.objects.all().order_by('id')
+        return render(request, 'myapp/index.html', {'booklist': booklist})
+    
 
 @login_required
 def user_logout(request):
