@@ -4,18 +4,28 @@
     <h1>Hello, {{ name | default:"So-&-so"}}!</h1>
 {% endblock %}
 {% block body_block %}
-    {% if category %}
-        <h4>List of books in given price range and from cateogry {{ category }}</h4>
-    {% else %}
-        <h4>List of books in given price range</h4>
-    {% endif %}
-    <ul>
+    <div class="content-section">
+        <fieldset class="form-group">
+                <legend class="border-bottom mb-4">List of books</legend>
+        </fieldset>
+    </div>
+    <div class="form-group">
+
     {% if booklist %}
-        {% for book in booklist %}
-            <li>{{ book.title }}</li>
-        {% endfor %}
+        <ul>
+            {% for book in booklist %}
+                <li>{{ book.title }}</li>
+            {% endfor %}
+        </ul>
     {% else %}
-        <li>No books available with given criteria</li>
+        <p>No books available with given criteria</p>
     {% endif %}
-    </ul>
+
+    </div>
+
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a clas="ml-2" href="{% url 'myapp:findbooks' %}">Find more books</a>
+        </small>
+    </div>
 {% endblock %}

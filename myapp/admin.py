@@ -1,7 +1,4 @@
 from django.contrib import admin
-
-# Register your models here.
-from django.contrib import admin
 from .models import Publisher, Book, Member, Order, Review, Profile
 
 
@@ -9,7 +6,6 @@ def increase_price(modeladmin, request, queryset):
     for book in queryset:
         book.price+=10
         book.save()
-    # queryset.update(price=queryset.price+10)
     increase_price.short_description = 'Increase price by $10'
 
 

@@ -10,7 +10,6 @@
 
              </fieldset>
              <div class="form-group">
-{#                     <input type="hidden" name="next" value="{{ request.path }}">#}
                  {% if request.GET.next %}
                      <input type="hidden" name="next" value="{{ request.GET.next }}">
                 {% endif %}
@@ -18,7 +17,7 @@
              </div>
          </form>
     </div>
-{#        <button onclick="{% url 'myapp:user_register' %}">New user? Register here</button>#}
+
     <div class="border-top pt-3">
         <small class="text-muted">
             <a class="ml-2" href="{% url 'myapp:forgot_password' %}">Forgot password?</a><br>

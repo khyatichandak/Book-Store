@@ -35,7 +35,6 @@ def about(request):
 
 
 class Detail(View):
-    # book=Book.objects.get(id=book_id)
 
     def get(self,request, book_id):
         book=get_object_or_404(Book,id=book_id)
@@ -46,14 +45,13 @@ def findbooks(request):
     if request.method == 'POST':
         form= SearchForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
             category = form.cleaned_data['category']
             max_price = form.cleaned_data['max_price']
             if category:
                 booklist = Book.objects.filter(category=category, price__lte=max_price)
             else:
                 booklist=Book.objects.filter(price__lte=max_price)
-            return render(request, 'myapp/results.html',{'booklist':booklist,'name':name,'category':category})
+            return render(request, 'myapp/results.html',{'booklist':booklist,'category':category})
         else:
             return HttpResponse('Invalid data')
     else:
@@ -61,6 +59,7 @@ def findbooks(request):
         return render(request,'myapp/findbooks.html',{'form':form})
 
 
+@login_required
 def place_order(request):
     if request.method == 'POST':
 
@@ -80,7 +79,6 @@ def place_order(request):
                 for b in order.books.all():
                     mem.borrowed_books.add(b)
 
-            # books=Member.objects.filter(username='mary').values('borrowed_books__title')
             return render(request, 'myapp/order_response.html', {'books': books, 'order': order})
         else:
             return render(request, 'myapp/placeorder.html', {'form': form})
@@ -93,16 +91,19 @@ def place_order(request):
 @login_required
 def review(request):
     username=request.user.username
+
     member_status = Member.objects.filter(username=username).values('status')
     if member_status[0]['status'] == 1 or member_status[0]['status'] == 2:
-        # [{key:value}]
+
         if request.method=='POST':
 
             form=ReviewForm(request.POST)
 
             if form.is_valid():
                 rating=form.cleaned_data['rating']
+
                 review = form.save()
+                review.reviewer = request.user.email
                 book=review.book
                 if rating in range(1,6):
                     review.save()
@@ -117,13 +118,12 @@ def review(request):
                     form = ReviewForm()
                     return render(request, 'myapp/review.html', {'form':form, 'error': 'You must enter a rating between 1 and 5!'})
             else:
-                return HttpResponse('Please enter all valid fields')
+                return render(request,'myapp/review.html',{'error':'Please enter all valid fields'})
 
         else:
             form=ReviewForm()
             return render(request, 'myapp/review.html', {'form':form, 'error': ''})
     else:
-        # form = ReviewForm()
         return render(request, 'myapp/review.html',
                       {'error': 'You are not able to submit the review!'})
 
@@ -134,8 +134,6 @@ def user_login(request):
         if request.method=='POST':
             form = LoginForm(request.POST)
 
-            # if form.is_valid():
-                # username = form.cleaned_data.get('username')
             username = request.POST['username']
             # password = form.cleaned_data.get('passsword')
             password = request.POST['password']
@@ -146,16 +144,16 @@ def user_login(request):
                 request.session['username'] = username
                 now = datetime.datetime.now()
                 request.session['last_login']=now.strftime("%d-%m-%Y %H:%M:%S")
-                request.session.set_expiry(60)
+                request.session.set_expiry(60*5)
                 messages.success(request, 'You are successfully Logged In!')
 
                 if 'next' in request.POST:
-                    return render(request.POST.get('next'))
+                    return render(request,request.POST.get('next'))
                 else:
                     return render(request, 'myapp/index.html')
-            # else:
-            #     # messages.error(request,f'Invalid data. Try again!')
-            #     return render(request, 'myapp/login.html', {'form':form})
+            else:
+                messages.error(request,'Invalid data. Try again!')
+                return render(request, 'myapp/login.html', {'form':form})
         else:
             form = LoginForm()
             return render(request,'myapp/login.html',{'form':form})
@@ -163,18 +161,23 @@ def user_login(request):
     else:
         booklist = Book.objects.all().order_by('id')
         return render(request, 'myapp/index.html', {'booklist': booklist})
-    
+
 
 @login_required
 def user_logout(request):
     logout(request)
     return render(request, 'myapp/logout.html')
     # del request.session['username']
-    return HttpResponseRedirect(reverse('myapp:index'))
 
 
 @login_required
-def chk_reviews(request,book_id):
+def chk_reviews(request):
+    booklist = Book.objects.all().order_by('id')
+    return render(request, 'myapp/chk_reviews.html', {'booklist':booklist})
+
+
+@login_required
+def chk_reviews_done(request,book_id):
 
     member=Member.objects.filter(username=request.user)
     avg = 0
@@ -184,10 +187,8 @@ def chk_reviews(request,book_id):
         if len(book)>0:
             avg=sum(book)/len(book)
 
-        return render(request,'myapp/chk_reviews.html',{'avg':avg,'member':member})
+        return render(request,'myapp/chk_reviews_done.html',{'avg':avg,'member':member})
     else:
-        # return HttpResponse('You are not a registered member!')
-        # return HttpResponseRedirect(request.POST.get('next', '/'))
         form = LoginForm()
         return render(request,'myapp/login.html',{'form':form})
 
@@ -199,18 +200,9 @@ def user_register(request):
         if form.is_valid():
             form.save()
             username=form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
-            # error, warning, info
+            messages.success(request, 'Account created for {username}!')
 
             return render(request, 'myapp/index.html')
-        # else:
-        #     messages.error(request,UserCreationForm.error_messages['password_mismatch'])
-        # username=request.POST['username']
-        # password=request.POST['password']
-        # if username and password:
-        #     return render(request,'myapp/index.html')
-        # else:
-        #     return HttpResponse('Invalid details.')
     else:
         form = RegisterForm()
     return render(request, 'myapp/register.html', {'form': form})

@@ -7,11 +7,12 @@
         <legend class="border-bottom mb-4">Book Review</legend>
     </fieldset>
     <div class="form-group">
-        {% if avg != 0 %}
-            <p>Average book ratings : {{ avg }}</p>
-        {% else %}
-            <p>No book reviews</p>
-        {% endif %}
+        <ol>
+            {% for book in booklist %}
+                <li><a href="{% url 'myapp:check_reviews_done' book.id %}">{{ book.title }}</a></li>
+            {% endfor %}
+        </ol>
+
     </div>
 </div>
 

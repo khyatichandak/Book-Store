@@ -1,0 +1,24 @@
+{% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body_block %}
+<div class="content-section">
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Book Review</legend>
+    </fieldset>
+    <div class="form-group">
+
+        {% if avg != 0 %}
+            <p>Average book ratings : {{ avg }}</p>
+        {% else %}
+            <p>No book reviews</p>
+        {% endif %}
+    </div>
+</div>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Do you want to check more reviews? <a clas="ml-2" href="{% url 'myapp:check_reviews' %}">Check Reviews</a>
+    </small>
+</div>
+
+{% endblock %}

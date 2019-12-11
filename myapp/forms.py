@@ -12,7 +12,7 @@ class SearchForm(forms.Form):
         ('T','Travel'),
         ('O','Other')
     ]
-    name=forms.CharField(max_length=100, required=False, label='Your Name')
+    # name=forms.CharField(max_length=100, required=False, label='Your Name')
     category=forms.ChoiceField(widget=forms.RadioSelect, choices=CATEGORY_CHOICES, required=False, label='Select a category')
     max_price=forms.IntegerField(label='Maximum Price', min_value=0)
 
@@ -29,7 +29,7 @@ class OrderForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model=Review
-        fields=['reviewer','book','rating','comments']
+        fields=['book','rating','comments']
         widgets={'book':forms.RadioSelect()}
         labels={'reviewer':'Please enter a valid email','rating':'Rating: An integer between 1(worst) and 5(best)'}
 

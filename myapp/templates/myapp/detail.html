@@ -3,21 +3,25 @@
 {% block body_block %}
     {% if book %}
     <fieldset class="form-group">
-         <legend class="border-bottom mb-4">Detail of Book <span class="font-weight-bold">{{ book.title }}</span></legend>
+         <legend class="border-bottom mb-4">Details of Book <span class="font-weight-bold">{{ book.title }}</span></legend>
     </fieldset>
     <table border="1">
         <tr>
             <th>Title</th>
             <th>Price($)</th>
             <th>Publisher</th>
+            <th>Category</th>
+            <th>Num pages</th>
+            <th>Num reviews</th>
         </tr>
-{#    {%  for b in book %}#}
         <tr>
             <td>{{ book.title }}</td>
             <td>{{ book.price }}</td>
             <td>{{ book.publisher.name }}</td>
+            <td>{{ book.category }}</td>
+            <td>{{ book.num_pages }}</td>
+            <td>{{ book.num_reviews }}</td>
         </tr>
-{#    {% endfor %}#}
     </table>
     {% endif %}
     <br>
