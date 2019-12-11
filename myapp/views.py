@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from .models import Book, Review, Order, Member
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import SearchForm, OrderForm, ReviewForm, RegisterForm, LoginForm, UserUpdateForm, ProfileUpdateForm, PasswordRequestForm, PasswordChangeForm
@@ -148,9 +148,10 @@ def user_login(request):
                 messages.success(request, 'You are successfully Logged In!')
 
                 if 'next' in request.POST:
-                    return render(request,request.POST.get('next'))
+                    return redirect(request.POST.get('next'))
                 else:
-                    return render(request, 'myapp/index.html')
+                    return HttpResponseRedirect(reverse('myapp:index'))
+                    # return render(request, 'myapp/index.html')
             else:
                 messages.error(request,'Invalid data. Try again!')
                 return render(request, 'myapp/login.html', {'form':form})
