@@ -100,7 +100,7 @@ class Review(models.Model):
 
 class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    image=models.ImageField(default='default.png', upload_to='profile_pics')
+    image=models.ImageField(default='profile_pics/default.png', upload_to='profile_pics')
 
     def __str__(self):
         return f'{self.user.username} Profile'

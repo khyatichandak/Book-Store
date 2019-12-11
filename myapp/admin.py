@@ -21,6 +21,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 class PublisherAdmin(admin.ModelAdmin):
+    fields=[('name','website'),('city','country')]
     list_display = ('name','website','city')
 
 

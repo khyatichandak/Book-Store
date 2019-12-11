@@ -118,7 +118,7 @@ def review(request):
                     form = ReviewForm()
                     return render(request, 'myapp/review.html', {'form':form, 'error': 'You must enter a rating between 1 and 5!'})
             else:
-                return render(request,'myapp/review.html',{'error':'Please enter all valid fields'})
+                return render(request,'myapp/review.html',{'form':form})
 
         else:
             form=ReviewForm()
@@ -201,7 +201,7 @@ def user_register(request):
         if form.is_valid():
             form.save()
             username=form.cleaned_data.get('username')
-            messages.success(request, 'Account created for {username}!')
+            messages.success(request, 'Account created for '+username)
 
             return render(request, 'myapp/index.html')
     else:
