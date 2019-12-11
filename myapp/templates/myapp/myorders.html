@@ -1,20 +1,25 @@
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
 {% block body_block %}
-<fieldset class="form-group">
-    <legend class="border-bottom mb-4">View Orders</legend>
-</fieldset>
-
-<div class="form-group">
-    <ul>
-    {% if order_list.count > 0 %}
-        {% for order in order_list %}
-            <li>{{ order.borrowed_books__title }}</li>
-        {% endfor %}
+    <div class="form-group">
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
     {% else %}
-        <li>You haven't placed any order!</li>
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">View Orders</legend>
+        </fieldset>
+        <ul>
+        {% if order_list.count > 0 %}
+            {% for order in order_list %}
+                <li>{{ order.borrowed_books__title }}</li>
+            {% endfor %}
+        {% else %}
+            <li>You haven't placed any order!</li>
+        {% endif %}
+        </ul>
     {% endif %}
-    </ul>
 </div>
 <div class="border-top pt-3">
     <small class="text-muted">

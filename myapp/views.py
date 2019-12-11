@@ -229,17 +229,16 @@ def user_register(request):
 @login_required
 def myorders(request):
     username = request.user.username
+    member = Member.objects.filter(username=username)
 
-    if username:
+    if member:
         order_list=Member.objects.filter(borrowed_books__title__startswith='', username=username).values('borrowed_books__title')
         return render(request,'myapp/myorders.html',{'order_list':order_list})
 
     else:
-        return HttpResponse('You are not a registered member!')
+        return render(request, 'myapp/myorders.html',{'error':'You are not a registered member!'})
 
 
-# member = Member.objects.get(username=username)
-    # print()
 @login_required
 def profile(request):
     if request.method=='POST':
