@@ -5,19 +5,22 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" rel="{% static '/js/bootstrap.js' %}"></script>
+
     <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
-    <script type="text/javascript" rel="{% static '/js/bootstrap.js' %}"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'myapp/books.png' %}">
+
     <title>{% block title %}Books Management{% endblock %}</title>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-navbar">
-  <a class="navbar-brand" href="#">Book Management System</a>
+  <img class="logo-img" src="{% static 'myapp/books.png' %}">
+  <a class="navbar-brand" href="#">Books Management</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -31,39 +34,26 @@
       <li class="nav-item">
         <a class="nav-link" href="{% url 'myapp:place_order' %}">Place Order<span class="sr-only"></span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'myapp:review' %}">Review Book<span class="sr-only"></span></a>
+      {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'myapp:review' %}">Review Book<span class="sr-only"></span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'myapp:myorders' %}">My Orders<span class="sr-only"></span></a>
+          </li>
+      {% endif %}
       </li>
-{#      <li class="nav-item active">#}
-{#        <a class="nav-link" href="{% url 'myapp:check_reviews' %}">Check Reviews<span class="sr-only">(current)</span></a>#}
-{#      </li>#}
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'myapp:about' %}">About<span class="sr-only"></span></a>
+      </li>
 
-{#      <li class="nav-item">#}
-{#        <a class="nav-link" href="#">Link</a>#}
-{#      </li>#}
-{#      <li class="nav-item dropdown">#}
-{#        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#          Dropdown#}
-{#        </a>#}
-{#        <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
-{#          <a class="dropdown-item" href="#">Action</a>#}
-{#          <a class="dropdown-item" href="#">Another action</a>#}
-{#          <div class="dropdown-divider"></div>#}
-{#          <a class="dropdown-item" href="#">Something else here</a>#}
-{#        </div>#}
-{#      </li>#}
-{#      <li class="nav-item">#}
-{#        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>#}
-{#      </li>#}
     </ul>
     <form class="form-inline my-2 my-lg-0" method="GET">
 
         {% csrf_token %}
 
-{#        {% if request.user.username %}#}
         {% if user.is_authenticated %}
-            <a class="nav-link btn btn-light" href="{% url 'myapp:profile' %}">{{ request.user.username | capfirst}}</a>&nbsp; &nbsp;
-{#            <a class="btn btn-outline-light" href="{%  url 'myapp:profile' %}">Profile</a>&nbsp; &nbsp;#}
+            <a class="btn btn-light" href="{%  url 'myapp:profile' %}">{{ request.user.username | capfirst}}</a>&nbsp; &nbsp;
             <a class="btn btn-outline-light" href="{%  url 'myapp:user_logout' %}">Logout</a>
         {% else %}
             Hello User &nbsp; &nbsp;
@@ -71,12 +61,9 @@
             <a class="btn btn-outline-light" href="{% url 'myapp:user_register' %}">Register</a>
         {% endif %}
 
-
-
     </form>
   </div>
 </nav>
-
 
     <div role="main" class="container main-body">
         <div class="col-6 mx-auto">
@@ -93,24 +80,7 @@
         </div>
         </div>
     </div>
-{#    <hr>#}
-{#    <div class="footer">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <ul>#}
-{#                    <div class="col">#}
-{#                        <li class="hbar1"><a href="{% url 'myapp:about' %}">Find out about this site</a></li>#}
-{#                    </div>#}
-{#                    <div class="col">#}
-{#                        <li class="hbar1"><a href="{% url 'myapp:index' %}">Click here to return to main page</a></li>#}
-{#                    </div>#}
-{#                    <div class="col">#}
-{#                        <li class="hbar1"><a href="{% url 'myapp:findbooks' %}">Click here to find books</a></li>#}
-{#                    </div>#}
-{#                </ul>#}
-{#            </div>#}
-{#        </div>#}
-{##}
-{#    </div>#}
+
+
 </body>
 </html>

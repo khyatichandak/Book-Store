@@ -1,11 +1,10 @@
-<!DOCTYPE html>
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
 {% block body_block %}
     <div class="content-section">
         <div class="media">
             <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-            {{ user.profile.image.url }}
+
             <div class="media-body">
                 <h2 class="account-heading">{{ user.username|capfirst }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>
@@ -20,6 +19,11 @@
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                <a class="ml-2" href="{% url 'myapp:change_password' %}">Change Password</a>
+            </small>
         </div>
     </form>
     </div>

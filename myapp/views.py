@@ -21,10 +21,6 @@ class Index(View):
         booklist=Book.objects.all().order_by('id')
         return render(request,'myapp/index.html',{'booklist':booklist})
 
-    def post(self,request):
-        booklist = Book.objects.all().order_by('id')
-        return render(request,'myapp/index.html')
-
 
 def about(request):
     cookie_value=request.COOKIES.get('lucky_num')
@@ -44,9 +40,6 @@ class Detail(View):
     def get(self,request, book_id):
         book=get_object_or_404(Book,id=book_id)
         return render(request,'myapp/detail.html',{'book':book})
-
-    def post(self,request):
-        pass
 
 
 def findbooks(request):
@@ -222,9 +215,8 @@ def user_register(request):
 @login_required
 def myorders(request):
     username = request.user.username
-    member = Member.objects.get(username=username)
-    # print()
-    if member:
+
+    if username:
         order_list=Member.objects.filter(borrowed_books__title__startswith='', username=username).values('borrowed_books__title')
         return render(request,'myapp/myorders.html',{'order_list':order_list})
 
@@ -232,6 +224,8 @@ def myorders(request):
         return HttpResponse('You are not a registered member!')
 
 
+# member = Member.objects.get(username=username)
+    # print()
 @login_required
 def profile(request):
     if request.method=='POST':

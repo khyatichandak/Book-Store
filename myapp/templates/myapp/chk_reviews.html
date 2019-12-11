@@ -1,24 +1,18 @@
-<!DOCTYPE html>
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% block body_block %}
 
+{% block body_block %}
+<div class="content-section">
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Book Review</legend>
+    </fieldset>
+    <div class="form-group">
         {% if avg != 0 %}
             <p>Average book ratings : {{ avg }}</p>
         {% else %}
             <p>No book reviews</p>
         {% endif %}
-        <form method="POST">
-        {% csrf_token %}
-{#        <input type="hidden" name="next" value="{{ request.path }}">#}
-{#        <p>{{ request.path }}</p>#}
-        </form>
-    {% endblock %}
-</body>
-</html>
+    </div>
+</div>
+
+{% endblock %}

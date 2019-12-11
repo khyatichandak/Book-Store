@@ -1,23 +1,25 @@
-<!DOCTYPE html>
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% block body_block %}
-        Hello, order response
-        <ul>
-        {% if order_list.count > 0 %}
-            {% for order in order_list %}
-                <li>{{ order.borrowed_books__title }}</li>
-            {% endfor %}
-        {% else %}
-            <li>You haven't placed any order!</li>
-        {% endif %}
-        </ul>
-    {% endblock %}
-</body>
-</html>
+{% block body_block %}
+<fieldset class="form-group">
+    <legend class="border-bottom mb-4">About <span class="font-weight-bold">View Orders</span></legend>
+</fieldset>
+
+<div class="form-group">
+    <ul>
+    {% if order_list.count > 0 %}
+        {% for order in order_list %}
+            <li>{{ order.borrowed_books__title }}</li>
+        {% endfor %}
+    {% else %}
+        <li>You haven't placed any order!</li>
+    {% endif %}
+    </ul>
+</div>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Do you want more books?<a class="ml-2" href="{%  url 'myapp:place_order' %}">Place Order</a>
+    </small>
+</div>
+
+{% endblock %}

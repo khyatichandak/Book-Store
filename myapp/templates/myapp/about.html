@@ -1,17 +1,24 @@
-<!DOCTYPE html>
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}eBook APP About page{% endblock %}</title>
+    <title>{% block title %}Books Management About page{% endblock %}</title>
 </head>
 <body>
 {% block body_block %}
-    <h2>This is an eBook APP.</h2>
-    <p>Your lucky number is {{ mynum }}</p>
-    <a href="/myapp/">Main page</a>(hardcoded url)<br>
-    <a href="{%  url 'myapp:index' %}">Main page</a>(url namespacing)
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">About <span class="font-weight-bold">Books Management</span></legend>
+    </fieldset>
+    <div class="form-group">
+        <p>Your lucky number is {{ mynum }}</p>
+    </div>
+
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a class="ml-2" href="{%  url 'myapp:index' %}">Home page</a>
+        </small>
+    </div>
 {% endblock %}
 </body>
 </html>

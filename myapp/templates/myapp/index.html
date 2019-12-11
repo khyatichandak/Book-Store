@@ -1,13 +1,6 @@
-<!DOCTYPE html>
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 {% block body_block %}
 {% if booklist %}
     <fieldset class="form-group">
@@ -35,5 +28,3 @@
 {#<p><a href="/myapp/about">About page</a></p>#}
 {#<p><a href="{% url 'myapp:about' %}">About page</a></p>#}
 {% endblock %}
-</body>
-</html>
