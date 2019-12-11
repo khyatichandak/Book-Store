@@ -20,7 +20,7 @@ class SearchForm(forms.Form):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields=['books','member','order_type']
+        fields=['books','order_type']
         widgets={'books':forms.CheckboxSelectMultiple(),
                  'order_type':forms.RadioSelect}
         labels={'member':'Member name'}

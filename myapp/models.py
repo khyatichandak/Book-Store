@@ -70,7 +70,7 @@ class Order(models.Model):
     ]
     # id = models.AutoField(primary_key=True)
     books=models.ManyToManyField(Book)
-    member= models.ForeignKey(Member, related_name='order', on_delete=models.CASCADE)
+    member= models.ForeignKey(Member, related_name='order', on_delete=models.CASCADE,blank=True, null=True)
     order_type=models.IntegerField(choices=STATUS_CHOICES,default=1)
     order_date=models.DateField(default=timezone.now)
 

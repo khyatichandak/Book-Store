@@ -1,14 +1,18 @@
 {% extends 'myapp/base.html' %}
 {% load crispy_forms_tags %}
 {% block body_block %}
-    Hello, order response
-    <ul>
-    {% if books %}
-        {% for book in books %}
-            <li>{{ book.title }}</li>
-        {% endfor %}
-    {% else %}
-        <li>No books available with given criteria</li>
-    {% endif %}
-    </ul>
+    <fieldset class="form-group">
+         <legend class="border-bottom mb-4">View Order</legend>
+    </fieldset>
+    <div class="form-group">
+        <ul>
+        {% if books %}
+            {% for book in books %}
+                <li>{{ book.title }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No books available with given criteria</li>
+        {% endif %}
+        </ul>
+    </div>
 {% endblock %}

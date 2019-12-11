@@ -65,16 +65,22 @@ def place_order(request):
     if request.method == 'POST':
 
         form = OrderForm(request.POST)
+
         if form.is_valid():
             books = form.cleaned_data['books']
             order = form.save()
-            member = order.member
-            type = order.order_type
-            order.save()
-            if type == 1:
-                for b in order.books.all():
-                    member.borrowed_books.add(b)
 
+            member_name = request.user.username
+
+            o_type = order.order_type
+            order.save()
+            mem = Member.objects.get(username=member_name)
+
+            if o_type == 1:
+                for b in order.books.all():
+                    mem.borrowed_books.add(b)
+
+            # books=Member.objects.filter(username='mary').values('borrowed_books__title')
             return render(request, 'myapp/order_response.html', {'books': books, 'order': order})
         else:
             return render(request, 'myapp/placeorder.html', {'form': form})
@@ -127,14 +133,22 @@ def user_login(request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
-            # username = form.cleaned_data.get('username')
-            messages.success(request, f'AYou are successfully Logged In!')
-            # return HttpResponseRedirect(request.POST.get('next','/'))
-            if 'next' in request.POST:
-                return render(request.POST.get('next'))
-            else:
-                # return HttpResponseRedirect(reverse('myapp:index'))
-                return render(request, 'myapp/index.html')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('passsword')
+            user = authenticate(username=username, password=password)
+
+            if user and user.is_active:
+                login(request,user)
+                request.session['username'] = username
+                now = datetime.datetime.now()
+                request.session['last_login']=now.strftime("%d-%m-%Y %H:%M:%S")
+                request.session.set_expiry(60)
+                messages.success(request, f'AYou are successfully Logged In!')
+
+                if 'next' in request.POST:
+                    return render(request.POST.get('next'))
+                else:
+                    return render(request, 'myapp/index.html')
         else:
             # messages.error(request,f'Invalid data. Try again!')
             return render(request, 'myapp/login.html', {'form':form})
